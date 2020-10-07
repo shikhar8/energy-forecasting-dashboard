@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+</style>
+</head>
+<body>
+
+<h2>Tabs</h2>
+<p>Click on the buttons inside the tabbed menu:</p>
+
+<div class="tab">
+  <a class="btn btn-primary" href="/">Home </a>
+  <a class="btn btn-primary" href="/cost"> Cost </a>
+  <a class="btn btn-primary" href="/consumer_demand">consumer_demand</a>
+</div>
+<h3>yoyoyoy</h3>
+<div id="alldata"></div>
+<canvas id="myChart4" height="50%"></canvas>
+<script>
+     var ctx = document.getElementById('myChart4').getContext('2d');
+     var alldata=JSON.parse("{{data|escapejs}}"); 
+     var dataNode = document.getElementById('alldata'); 
+    var xdata=[]
+    var ydata=[]
+    var zdata=[]
+    xdata=alldata['X_Value']
+    ydata=alldata['Y_Value']
+    zdata=alldata['Z_Value']
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: xdata,
+        datasets: [{
+            label: 'Cost Predicted For Next Day',
+            data: ydata,
+            borderWidth: 1,
+            fill: false,
+            lineTension: 0,
+            borderColor: 'rgba(255,0,0,0.3)'
+        }
+        {
+            label: 'Cost Today',
+            data: zdata,
+            borderWidth: 1,
+            fill: false,
+            lineTension: 0,
+            borderColor: 'rgba(0,0,255,0.3)'
+        }
+        ],
+    },
+    options: {
+        barValueSpacing: 20,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                },
+                scaleLabel: {
+display: true,
+labelString: 'y AXIS label'
+}
+            }],
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true
+                },
+                scaleLabel: {
+display: true,
+labelString: 'x AXIS label'
+}
+            }]
+        }
+    }
+});
+</script>
+
+</body>
+</html> 
